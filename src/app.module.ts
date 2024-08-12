@@ -1,18 +1,21 @@
+import { databaseConnection } from './common/config/database.connection';
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
-import configuration from './config/configuration';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import configuration from './common/config/configuration';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
-    DatabaseModule,
     ConfigModule.forRoot({
       load: [configuration],
     }),
+    TypeOrmModule.forRoot(databaseConnection()),
+    UsersModule,
+    AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

@@ -1,5 +1,6 @@
 export default () => ({
   port: process.env.PORT || 3000,
+  env: process.env.NODE_ENV || 'production',
   database: {
     type: process.env.DATABASE_TYPE as 'postgres' | 'mysql',
     host: process.env.DATABASE_HOST,
