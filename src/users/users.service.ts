@@ -1,9 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { IHashingService } from 'src/common/types/hashing.interface';
-import { AlreadyExists } from 'src/common/errors/already-exists';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -23,7 +22,7 @@ export class UsersService {
     );
 
     const user = this.usersRepository.create({
-      email: createUserDto.password,
+      email: createUserDto.email,
       name: createUserDto.name,
       password: hashedPassword,
       salt,
@@ -33,7 +32,7 @@ export class UsersService {
       await this.usersRepository.save(user);
     } catch (error) {
       if (error.code === '23505') {
-        throw new AlreadyExists('Email');
+        throw new UnauthorizedException('Email Already Exists');
       }
       throw error;
     }

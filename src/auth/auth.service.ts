@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { SignInDTO } from './dto/sign-in.dto';
 import { UsersService } from 'src/users/users.service';
 
@@ -10,7 +10,7 @@ export class AuthService {
     const user = await this.usersService.findByEmail(signInDto.email);
 
     if (!user) {
-      return null;
+      throw new BadRequestException('Email Not Found');
     }
 
     const isPasswordValid = await this.usersService.validatePassword(
@@ -19,7 +19,7 @@ export class AuthService {
     );
 
     if (!isPasswordValid) {
-      return null;
+      throw new BadRequestException('Invalid Credentials');
     }
 
     return user;
