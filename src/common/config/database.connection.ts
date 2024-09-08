@@ -7,6 +7,6 @@ export const databaseConnection = () => ({
   username: configuration().database.username,
   password: configuration().database.password,
   database: configuration().database.database,
-  synchronize: configuration().env !== 'production' ? true : false, // TODO - SET ENV TO FALSE IN PRODUCTION
+  synchronize: configuration().env !== 'production' ? true : false,
   autoLoadEntities: true,
 });

@@ -10,6 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   imports: [
     ConfigModule.forRoot({
       load: [configuration],
+      isGlobal: true,
     }),
     TypeOrmModule.forRoot(databaseConnection()),
     UsersModule,

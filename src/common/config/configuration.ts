@@ -1,6 +1,10 @@
 export default () => ({
   port: process.env.PORT || 3000,
   env: process.env.NODE_ENV || 'production',
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  },
   database: {
     type: process.env.DATABASE_TYPE as 'postgres' | 'mysql',
     host: process.env.DATABASE_HOST,
